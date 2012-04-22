@@ -8,27 +8,31 @@ _/    _/  _/    _/  _/        _/    _/  _/    _/  _/    _/    _/    _/    _/
        _/                                                                        
 
 //  Created by Victor Vieux on 9/9/11.
-//  Copyright 2011 OpenUDID.org
+//  Rewrite by Jason Lam on 22/4/12.
+//  Copyright 2012 OpenUDID.net
 //
 //  iOS / MacOS code: https://github.com/ylechelle/OpenUDID
 //  Android code: https://github.com/vieux/OpenUDID
+//  Android Alternate code: https://github.com/jasonlamkk/OpenUDID
+//  .Net / SliverLight code: https://github.com/jasonlamkk/OpenUDID.Net
 //
 //  Contributors:
 //      https://github.com/ylechelle (initiator & iOS code)
 //      https://github.com/samrobbins (Mac OS port)
 //      https://github.com/vieux (Android version)
+//      https://github.com/jasonlamkk (.Net / SliverLight / Android version)
 
 Synopsis: an open source project to provide a universal and persistent
           Unique Device IDentifier (UDID) solution for Android
 
 Usage:
-* Add this to your manifest:
-<service android:name="org.openudid.OpenUDID_service">
-	 <intent-filter>
-		<action android:name="org.openudid.GETUDID" />
-	</intent-filter>
-</service>
+* selectively add this to your manifest:
 
-* Call `void OpenUDID_manager.sync(Context yourContext);` to initialize the OpenUDID
-* Call `boolean OpenUDID_manager.isInitialized();` to check if the initialization is over (it's asynchronous)
-* Call `String OpenUDID_manager.getOpenUDID();` to retrieve your OpenUDID
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+
+* Call void OpenUDID.syncContext(getApplicationContext()); ///to initialize the OpenUDID
+// this version is synchronous
+* Call `String OpenUDID.getOpenUDIDInContext();` to retrieve your OpenUDID
