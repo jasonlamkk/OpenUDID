@@ -25,6 +25,13 @@ _/    _/  _/    _/  _/        _/    _/  _/    _/  _/    _/    _/    _/    _/
 Synopsis: an open source project to provide a universal and persistent
           Unique Device IDentifier (UDID) solution for Android
 
+Major Changes:
+ - make sure the UDID is consistent across application
+ - allow using least permission
+ - clearly indicate the source of UDID, e.g. IMEI:/WIFIMAC:/BTMAC:/ANDROID:
+ - provide enough fail back for Android2.2 device with invalid ANDROID_ID, no phone, no WiFi, no BlueTooth enviroment
+ - include a demo project (the project works for android 1.6+ without BT and 2.1+ with BT)
+
 Usage:
 * in OpenUDID.java , configure the values
 	private final static boolean _UseImeiFailback = true;// false if you don't wanna include READ_PHONE_STATE permission

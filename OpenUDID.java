@@ -6,6 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import android.bluetooth.BluetoothAdapter;
 import android.telephony.TelephonyManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -14,17 +16,34 @@ import android.util.Log;
 
 public class OpenUDID {
 	public final static String TAG = "OpenUDID";//for Log
+	public final static String PREF_KEY = "openudid";
+	public final static String PREFS_NAME = "openudid_prefs";
+	
 	private static String _openUdid;
 	private final static boolean _UseImeiFailback = true;// false if you don't wanna include READ_PHONE_STATE permission
 	//we recommend adding BT permission over  READ_PHONE_STATE permission as the will be less privacy concerns
 	private final static boolean _UseBlueToothFailback = true; // false if you don't wanna include BT permission or android 1.6
 	private final static boolean LOG = true; //Display or not debug message
+	private static void _debugLog(String lmsg){
+		if(!LOG)
+			return;
+		Log.d(TAG, lmsg);
+	}
 	/*public OpenUDID() {
 		// TODO Auto-generated constructor stub
 	}*/
 	public static void syncContext(Context mContext){
 		if(_openUdid==null){
-			generateOpenUDIDInContext(mContext);
+			SharedPreferences mPreferences =  mContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+			String _keyInPref = mPreferences.getString(PREF_KEY, null);
+			if(null == _keyInPref){
+				generateOpenUDIDInContext(mContext);
+				Editor e = mPreferences.edit();
+				e.putString(PREF_KEY, _openUdid);
+				e.commit();
+			}else{
+				_openUdid = _keyInPref;
+			}
 		}
 	}
 	public static String getOpenUDIDInContext() {
@@ -35,7 +54,7 @@ public class OpenUDID {
 	 * Generate a new OpenUDID
 	 */
 	private static void generateOpenUDIDInContext(Context mContext) {
-		if (LOG) Log.d(TAG, "Generating openUDID");
+		if (LOG) _debugLog( "Generating openUDID");
 		//Try to get WIFI MAC
 		generateWifiId(mContext);
 		if(null!=_openUdid){
@@ -70,9 +89,9 @@ public class OpenUDID {
 		}
 		
 		
-		Log.d(TAG,_openUdid);
+		_debugLog(_openUdid);
 		
-		Log.d(TAG,"done");
+		_debugLog("done");
     }
 	
 	private static void generateImeiId(Context mContext) {
@@ -105,7 +124,7 @@ public class OpenUDID {
 			WifiManager wifiMan = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 			WifiInfo wifiInf = wifiMan.getConnectionInfo();
 
-			Log.d(TAG,String.format("%s",wifiInf.getMacAddress()));
+			_debugLog(String.format("%s",wifiInf.getMacAddress()));
 		
 			String macAddr = wifiInf.getMacAddress();
 			if(macAddr!=null){
@@ -154,7 +173,7 @@ public class OpenUDID {
 				Build.TIME,
 				Build.DISPLAY,Build.HOST,Build.MANUFACTURER,Build.MODEL);
 		
-		Log.d(TAG,fp);
+		_debugLog(fp);
 		if(null!=fp){
 			_openUdid = Md5(fp);
 		}
