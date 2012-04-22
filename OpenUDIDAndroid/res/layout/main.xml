@@ -23,4 +23,18 @@
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <TextView
+        android:id="@+id/TextView3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="CorpUDID"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/TextView4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </LinearLayout>

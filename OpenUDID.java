@@ -50,6 +50,12 @@ public class OpenUDID {
 		
 		return _openUdid;
 	}
+	
+	public static String getCorpUDID(String corpIdentifier){
+		return Md5(
+				String.format("%s:%s",corpIdentifier,getOpenUDIDInContext())
+				);
+	}
 	/*
 	 * Generate a new OpenUDID
 	 */
