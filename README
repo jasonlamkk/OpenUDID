@@ -26,11 +26,16 @@ Synopsis: an open source project to provide a universal and persistent
           Unique Device IDentifier (UDID) solution for Android
 
 Usage:
+* in OpenUDID.java , configure the values
+	private final static boolean _UseImeiFailback = true;// false if you don't wanna include READ_PHONE_STATE permission
+	//we recommend adding BT permission over  READ_PHONE_STATE permission as the will be less privacy concerns
+	private final static boolean _UseBlueToothFailback = true; // false if you don't wanna include BT permission or android 1.6
+	
 * selectively add this to your manifest:
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+<!-- if BlueTooth is used-->    <uses-permission android:name="android.permission.BLUETOOTH"/>
+<!-- if IMEI is used-->    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
 
 * Call void OpenUDID.syncContext(getApplicationContext()); ///to initialize the OpenUDID
