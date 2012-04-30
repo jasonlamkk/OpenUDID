@@ -22,10 +22,10 @@ public class OpenUDID {
 	public final static String PREFS_NAME = "openudid_prefs";
 	
 	private static String _openUdid;
-	private final static boolean _UseImeiFailback = true;// false if you don't wanna include READ_PHONE_STATE permission
+	private final static boolean _UseImeiFailback = false;// false if you don't wanna include READ_PHONE_STATE permission
 	//we recommend adding BT permission over  READ_PHONE_STATE permission as the will be less privacy concerns
-	private final static boolean _UseBlueToothFailback = true; // false if you don't wanna include BT permission or android 1.6
-	private final static boolean LOG = true; //Display or not debug message
+	private final static boolean _UseBlueToothFailback = false; // false if you don't wanna include BT permission or android 1.6
+	private final static boolean LOG = false; //Display or not debug message
 	private static void _debugLog(String lmsg){
 		if(!LOG)
 			return;
