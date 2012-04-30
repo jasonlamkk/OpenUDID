@@ -31,6 +31,7 @@ Major Changes:
  - clearly indicate the source of UDID, e.g. IMEI:/WIFIMAC:/BTMAC:/ANDROID:
  - provide enough fail back for Android2.2 device with invalid ANDROID_ID, no phone, no WiFi, no BlueTooth enviroment
  - include a demo project (the project works for android 1.6+ without BT and 2.1+ with BT)
+ - add the concept of internal UDID which protect privacy, make it harder for 3rd party to identify your users' devices
 
 Usage:
 * in OpenUDID.java , configure the values
@@ -48,3 +49,4 @@ Usage:
 * Call void OpenUDID.syncContext(getApplicationContext()); ///to initialize the OpenUDID
 // this version is synchronous
 * Call `String OpenUDID.getOpenUDIDInContext();` to retrieve your OpenUDID
+* Call `String OpenUDID.getCorpUDID(String corpIdentifier);` to retrieve your internal UDID (suggested corpIdentifier can be domain or java package name like com.wavespread)
