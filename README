@@ -13,7 +13,7 @@ _/    _/  _/    _/  _/        _/    _/  _/    _/  _/    _/    _/    _/    _/
 //
 //  iOS / MacOS code: https://github.com/ylechelle/OpenUDID
 //  Android code: https://github.com/vieux/OpenUDID
-//  Android Alternate code: https://github.com/jasonlamkk/OpenUDID
+//  Android Alternate code: https://github.com/jasonlamkk/OpenUDID  (no background service, well control of users permission , compatible to IMEI / BT / WIFI methods)
 //  .Net / SliverLight code: https://github.com/jasonlamkk/OpenUDID.Net
 //
 //  Contributors:
@@ -26,6 +26,7 @@ Synopsis: an open source project to provide a universal and persistent
           Unique Device IDentifier (UDID) solution for Android
 
 Major Changes:
+ - (*new) added usage of cross-application shared preferences in PackageContext to feature ensuare consistency of UDID
  - make sure the UDID is consistent across application
  - allow using least permission
  - clearly indicate the source of UDID, e.g. IMEI:/WIFIMAC:/BTMAC:/ANDROID:
