@@ -2,12 +2,14 @@ package net.openudid.android;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 import android.bluetooth.BluetoothAdapter;
 import android.telephony.TelephonyManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -34,7 +36,15 @@ public class OpenUDID {
 	}*/
 	public static void syncContext(Context mContext){
 		if(_openUdid==null){
-			SharedPreferences mPreferences =  mContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+			Context openContext = null;
+			try {
+				openContext = mContext.createPackageContext("net.openudid.android", Context.CONTEXT_IGNORE_SECURITY );
+				mContext = openContext;
+			} catch (NameNotFoundException e1) {
+
+			}
+
+			SharedPreferences mPreferences =  mContext.getSharedPreferences(PREFS_NAME, Context.MODE_WORLD_READABLE);
 			String _keyInPref = mPreferences.getString(PREF_KEY, null);
 			if(null == _keyInPref){
 				generateOpenUDIDInContext(mContext);
@@ -53,7 +63,7 @@ public class OpenUDID {
 	
 	public static String getCorpUDID(String corpIdentifier){
 		return Md5(
-				String.format("%s:%s",corpIdentifier,getOpenUDIDInContext())
+				String.format("%s.%s",corpIdentifier,getOpenUDIDInContext())
 				);
 	}
 	/*
@@ -86,12 +96,10 @@ public class OpenUDID {
 			_openUdid = null;
 			generateBlueToothId();
 			if(_openUdid == null){
-
-				generateSystemId();
-				
+				generateRandomNumber();
 			}
 		}else{
-			generateSystemId();
+			generateRandomNumber();
 		}
 		
 		
@@ -163,7 +171,14 @@ public class OpenUDID {
 		return mOutput.toUpperCase();
 	}
 	
+	
+	private static void generateRandomNumber(){
+		_openUdid = Md5(UUID.randomUUID().toString());
+	}
+	
+	@SuppressWarnings("unused")///
 	private static void generateSystemId(){
+		// update , never reach here
 		// only reach here for very narrow chances  (android 2.2 , no wifi , no bluetooth)
 		// this always return sth.
 		String fp = String.format("%s/%s/%s/%s:%s/%s/%s:%s/%s/%d-%s-%s-%s-%s",
